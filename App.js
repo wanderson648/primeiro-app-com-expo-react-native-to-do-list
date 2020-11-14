@@ -7,7 +7,9 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 
 
@@ -20,6 +22,12 @@ export default function App() {
 
   return (
     <>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={0}
+      behavior='padding'
+      style={{ flex: 1}}
+      enabled={Platform.OS === 'ios'}
+    >
       <View style={styles.container}>
         <View style={styles.body}>
           <FlatList 
@@ -42,20 +50,21 @@ export default function App() {
           />
         </View>
         <View style={styles.form}>
-          <TextInput 
-            style={styles.input}
-            placeholderTextColor='#999'
-            autoCorrect={true}
-            placeholder='Add a task'
-            maxLength={25}
-          />
-          <TouchableOpacity style={styles.button}>
-            
-            <Ionicons name='ios-add' size={25} color='#fff'/>
+            <TextInput 
+              style={styles.input}
+              placeholderTextColor='#999'
+              autoCorrect={true}
+              placeholder='Add a task'
+              maxLength={25}
+            />
+            <TouchableOpacity style={styles.button}>
+              
+              <Ionicons name='ios-add' size={25} color='#fff'/>
 
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </>
   );
 }
