@@ -11,7 +11,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native';
 
 
@@ -68,6 +69,27 @@ export default function App() {
   }
 
 
+  // function to save datas on the asyncStorage
+  useEffect(() => {
+    async function renderData() {
+      const task = await AsyncStorage.getItem('task');
+
+      if (task) {
+        setTask(JSON.parse(task));
+      }
+    }
+    renderData();
+  }, [])
+
+  useEffect(() => {
+    async function saveData() {
+      AsyncStorage.setItem('task', JSON.stringify(task));
+    }
+    saveData();
+  }, [task]);
+
+
+
   return (
     <>
     <KeyboardAvoidingView
@@ -78,6 +100,7 @@ export default function App() {
     >
       <View style={styles.container}>
         <View style={styles.body}>
+          <Text style={styles.text}>Todo List</Text>
           <FlatList 
             style={styles.flatList}
             data={task}
@@ -133,6 +156,14 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 18,
+    marginTop: 18,
+    color: '#1c6cce'
   },
   form: {
     padding: 0,
