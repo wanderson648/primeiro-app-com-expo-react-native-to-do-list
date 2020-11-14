@@ -9,7 +9,9 @@ import {
   TouchableOpacity,
   FlatList,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Keyboard,
+  Alert
 } from 'react-native';
 
 
@@ -19,6 +21,29 @@ import {
 export default function App() {
   const [task, setTask] = useState(['alisson', 'macedo', 'renan']);
   const [newTask, setNewTask] = useState('');
+
+
+  // function to add a new task
+  async function addTask() {
+    
+    if (newTask === '') {
+      return;
+    }
+    
+    const search = task.filter(task =>  task === newTask);
+    
+    if (search.length != 0) {
+      Alert.alert('Warning', 'Task already exists');
+      return;
+    }
+
+    setTask([...task, newTask]);
+    setNewTask('');
+
+    Keyboard.dismiss();
+  }
+
+
 
   return (
     <>
@@ -56,11 +81,14 @@ export default function App() {
               autoCorrect={true}
               placeholder='Add a task'
               maxLength={25}
+              onChangeText={ text => setNewTask(text)} 
+              value={newTask} 
             />
-            <TouchableOpacity style={styles.button}>
-              
+            <TouchableOpacity 
+              style={styles.button} 
+              onPress={() => addTask()}
+            >
               <Ionicons name='ios-add' size={25} color='#fff'/>
-
             </TouchableOpacity>
           </View>
         </View>
