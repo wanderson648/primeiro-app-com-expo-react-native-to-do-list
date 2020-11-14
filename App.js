@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+
 import { 
   View,
   Text,
@@ -8,16 +10,35 @@ import {
   FlatList
 } from 'react-native';
 
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+
 
 
 export default function App() {
+  const [task, setTask] = useState(['alisson', 'macedo', 'renan']);
+  const [newTask, setNewTask] = useState('');
+
   return (
     <>
       <View style={styles.container}>
         <View style={styles.body}>
           <FlatList 
             style={styles.flatList}
+            data={task}
+            keyExtractor={item => item.toString()}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <View style={styles.containerView}>
+                <Text style={styles.textoView}>{item}</Text>
+                <TouchableOpacity>
+                  <MaterialIcons 
+                    name='delete-forever'
+                    size={25}
+                    color='#f64c75'
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
           />
         </View>
         <View style={styles.form}>
@@ -83,6 +104,26 @@ const styles = StyleSheet.create({
   flatList: {
     flex: 1,
     marginTop: 5
+  },
+  containerView: {
+    marginBottom: 15,
+    padding: 15,
+    borderRadius: 4,
+    backgroundColor: '#eee',
+
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: '#eee'
+  },
+  textoView: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: 'bold',
+    marginTop: 4,
+    textAlign: 'center'
   }
 
 })
