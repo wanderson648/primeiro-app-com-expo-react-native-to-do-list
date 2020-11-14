@@ -28,6 +28,7 @@ export default function App() {
   async function addTask() {
     
     if (newTask === '') {
+      Alert.alert('Warning', 'Add a valid task');
       return;
     }
     
