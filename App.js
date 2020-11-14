@@ -20,7 +20,7 @@ import {
 
 
 export default function App() {
-  const [task, setTask] = useState(['alisson', 'macedo', 'renan']);
+  const [task, setTask] = useState([]);
   const [newTask, setNewTask] = useState('');
 
 
