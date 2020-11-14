@@ -32,7 +32,7 @@ export default function App() {
     
     const search = task.filter(task =>  task === newTask);
     
-    if (search.length != 0) {
+    if (search.length !== 0) {
       Alert.alert('Warning', 'Task already exists');
       return;
     }
@@ -43,6 +43,29 @@ export default function App() {
     Keyboard.dismiss();
   }
 
+  // function to remove a task
+  async function removeTask(item) {
+
+    Alert.alert(
+      'Delete task',
+      'Are you sure you want to delete this task?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {
+            return;
+          },
+          style: 'cancel'
+        },
+        {
+          text: 'OK',
+          onPress: () => setTask(task.filter(tasks => tasks !== item))
+        }
+      ],
+      { cancelable: false }
+    );
+    
+  }
 
 
   return (
@@ -63,7 +86,9 @@ export default function App() {
             renderItem={({ item }) => (
               <View style={styles.containerView}>
                 <Text style={styles.textoView}>{item}</Text>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => removeTask(item)}
+                >
                   <MaterialIcons 
                     name='delete-forever'
                     size={25}
